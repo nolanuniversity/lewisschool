@@ -42,18 +42,18 @@ input,select,textarea{color-scheme:light only}
 .top-bar-left span{display:inline-flex;align-items:center;gap:8px;white-space:nowrap}
 .top-bar-left i{color:var(--gold);flex-shrink:0}
 .top-bar-right{display:flex;gap:16px;align-items:center;flex-wrap:wrap}
-.top-bar-right a{color:#cbd5e1;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;font-size:12.5px}
+.top-bar-right a{color:#cbd5e1;display:inline-flex;align-items:center;gap:6px;white-space:nowrap;font-size:12.5px;cursor:pointer}
 .top-bar-right a:hover{color:var(--gold)}
 
 /* ===== HEADER ===== */
 .main-header{background:#fff;box-shadow:var(--shadow-sm);position:sticky;top:0;z-index:1000;transition:var(--transition);width:100%}
 .main-header .container{display:flex;justify-content:space-between;align-items:center;padding:14px 24px;gap:16px;max-width:1240px;min-width:0}
-.logo{display:flex;align-items:center;flex-shrink:1;min-width:0;overflow:hidden;text-decoration:none;cursor:pointer}
-.logo img{height:52px;width:auto;max-width:100%;display:block;object-fit:contain;transition:var(--transition)}
+.logo{display:flex;align-items:center;flex-shrink:1;min-width:0;overflow:hidden;text-decoration:none;cursor:pointer;transition:var(--transition)}
+.logo img{height:52px;width:auto;max-width:100%;display:block;object-fit:contain;transition:var(--transition);pointer-events:none}
 .logo:hover img{opacity:.92;transform:scale(1.02)}
 .header-right{display:flex;gap:14px;align-items:center;flex-shrink:0}
-.header-right a{font-size:13.5px;font-weight:600;color:var(--forest)}
-.header-right a:hover{color:var(--gold-dark)}
+.header-right a{font-size:13.5px;font-weight:600;color:var(--forest);display:inline-flex;align-items:center;gap:6px;cursor:pointer;padding:8px 14px;border-radius:8px;border:2px solid transparent;transition:var(--transition)}
+.header-right a:hover{color:var(--gold-dark);background:var(--gold-10);border-color:rgba(201,162,39,.3)}
 
 /* ===== APPLICATION HEADER ===== */
 .application-header{background:linear-gradient(135deg,var(--forest-dark) 0%,var(--forest) 100%);color:#fff;padding:48px 0 42px;text-align:center;position:relative;overflow:hidden}
@@ -192,7 +192,8 @@ input,select,textarea{color-scheme:light only}
 @media(max-width:600px){
   .container{padding:0 16px}
   .logo img{height:38px}
-  .header-right a{font-size:12.5px}
+  .header-right a{font-size:12.5px;padding:6px 10px}
+  .header-right a span.hide-mobile{display:none}
   .section-title{font-size:20px}
   .fee-amount{font-size:28px}
   .form-navigation .btn{flex:1;min-width:130px}
@@ -200,7 +201,7 @@ input,select,textarea{color-scheme:light only}
 @media(max-width:400px){
   .logo img{height:32px}
   .header-right{gap:8px}
-  .header-right a{font-size:11.5px}
+  .header-right a{font-size:11.5px;padding:5px 8px}
 }
 </style>
 </head>
@@ -215,7 +216,7 @@ input,select,textarea{color-scheme:light only}
       <span><i class="fas fa-university"></i> A school of Nolan University</span>
     </div>
     <div class="top-bar-right">
-      <a href="index.html"><i class="fas fa-arrow-left"></i> Back to Lewis School</a>
+      <a href="./index.html" onclick="return goHome(event);"><i class="fas fa-arrow-left"></i> Back to Lewis School</a>
     </div>
   </div>
 </div>
@@ -223,11 +224,11 @@ input,select,textarea{color-scheme:light only}
 <!-- HEADER -->
 <header class="main-header" id="mainHeader">
   <div class="container">
-    <a href="index.html" class="logo" id="homeLogo" aria-label="Lewis School — Home">
+    <a href="./index.html" class="logo" id="homeLogo" aria-label="Lewis School — Home" onclick="return goHome(event);">
       <img src="b8a97971-51bf-458b-95b1-b8d78773f16f.png" alt="Lewis School — Finance &amp; Investment · Nolan University">
     </a>
     <div class="header-right">
-      <a href="index.html">← Back to homepage</a>
+      <a href="./index.html" onclick="return goHome(event);"><i class="fas fa-home"></i> <span class="hide-mobile">Back to Homepage</span></a>
     </div>
   </div>
 </header>
@@ -598,6 +599,57 @@ input,select,textarea{color-scheme:light only}
 
 <script>
 /* =========================================================
+   HOME NAVIGATION — Robust
+   Called by the logo, "Back to Lewis School" and "Back to Homepage".
+   Tries multiple paths so it works on GitHub Pages, custom domains,
+   subfolders, and local file:// viewing.
+   ========================================================= */
+function goHome(e){
+  if(e && e.preventDefault) e.preventDefault();
+
+  // Build a list of candidate URLs, ordered by likelihood
+  const candidates = [
+    './index.html',     // same folder, explicit
+    'index.html',       // same folder, relative
+    './',               // current directory (serves index.html by default)
+    '/',                // domain root (in case homepage is at root)
+  ];
+
+  // Try the first candidate immediately. If the browser can't reach it,
+  // the user can still use browser back. This is fast and simple.
+  // We pick based on current page:
+  const path = window.location.pathname;
+
+  // If we're already on the homepage (index.html or root), just scroll to hero
+  const onHomepage =
+    path === '/' ||
+    path === '' ||
+    path.endsWith('/index.html') ||
+    path.endsWith('/') ||
+    path === '/index.html';
+
+  if(onHomepage){
+    const hero = document.getElementById('hero');
+    if(hero) hero.scrollIntoView({ behavior:'smooth', block:'start' });
+    else window.scrollTo({ top: 0, behavior: 'smooth' });
+    return false;
+  }
+
+  // Otherwise, navigate to the homepage.
+  // Use location.assign so the browser adds a proper history entry.
+  try{
+    window.location.assign('./index.html');
+  } catch(err){
+    try{
+      window.location.href = 'index.html';
+    } catch(err2){
+      window.location.href = './';
+    }
+  }
+  return false;
+}
+
+/* =========================================================
    CONFIG
    ========================================================= */
 const USD_RATE = 20; // ZMW per 1 USD
@@ -612,7 +664,7 @@ function fmtUSD(zmw){ return 'US$' + toUSD(zmw).toLocaleString(); }
 function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 
 /* =========================================================
-   PROGRAMME MAPPING — Programme names per (subject, format)
+   PROGRAMME MAPPING
    ========================================================= */
 const PROGRAMME_NAMES = {
   'Finance': {
@@ -772,7 +824,6 @@ function updateFeeDisplay(){
    PAYMENT PROCESSING
    ========================================================= */
 $('#payNowBtn').addEventListener('click', () => {
-  // Validate step 1 and step 2 first
   if(!state.subject || !state.format){
     showToast('Please select a discipline and format first', 'error');
     state.currentSection = 1;
@@ -805,11 +856,8 @@ $('#payNowBtn').addEventListener('click', () => {
     btn.innerHTML = '✓ Payment Complete';
     btn.disabled = true;
 
-    // Unlock all payment-locked inputs
     document.querySelectorAll('.payment-locked input, .payment-locked select, .payment-locked textarea, .payment-locked button').forEach(el => el.disabled = false);
-    // Enable checkboxes
     ['agreeTerms','agreeSubmit','newsletter'].forEach(id => { const el = document.getElementById(id); if(el) el.disabled = false; });
-    // Mark step 3 complete
     const step3 = document.querySelector('.step[data-step="3"]');
     if(step3) step3.classList.add('payment-paid');
 
@@ -921,7 +969,6 @@ document.querySelectorAll('.step').forEach(step => {
       state.currentSection = target;
       updateFormDisplay();
     } else if(target > state.currentSection){
-      // walk forward validating each
       for(let i = state.currentSection; i < target; i++){
         if(!validateSection(i)) return;
       }
@@ -983,26 +1030,47 @@ $('#applicationForm').addEventListener('submit', e => {
   setTimeout(() => {
     showToast('Application submitted successfully! Check your email for confirmation.', 'success');
     setTimeout(() => {
-      window.location.href = 'index.html';
+      window.location.href = './index.html';
     }, 2200);
   }, 1600);
 });
 
 /* =========================================================
-   LOGO CLICK → back to homepage hero
-   (On this page it uses href="index.html", so no override needed.)
-   But we add a small nicety: if a logo has #homeLogo and we are on
-   admissions-apply.html, we ensure mobile menu classes close.
+   AUTO-SELECT PROGRAMME FROM HOMEPAGE
    ========================================================= */
-(function setupHomeLogo(){
-  const logo = document.getElementById('homeLogo');
-  if(!logo) return;
-  logo.addEventListener('click', () => {
-    // Let the href="index.html" navigate naturally.
-    // Just clean up local UI state.
-    const nav = document.getElementById('mobileNav');
-    if(nav) nav.classList.remove('show');
+(function restoreSelectedProgramme(){
+  let selected = null;
+  try{
+    selected = JSON.parse(sessionStorage.getItem('lewisSelectedProgramme') || 'null');
+  }catch(e){ selected = null; }
+  if(!selected || !selected.subject || !selected.format) return;
+
+  let matched = false;
+  document.querySelectorAll('#disciplinesGrid .school-card').forEach(card => {
+    if(card.dataset.subject === selected.subject){
+      card.classList.add('selected');
+      state.subject = selected.subject;
+      matched = true;
+    }
   });
+  if(!matched) return;
+
+  $('#formatGroup').style.display = 'block';
+  const fmt = document.getElementById('formatSelect');
+  if(fmt){
+    for(let i = 0; i < fmt.options.length; i++){
+      if(fmt.options[i].value === selected.format){
+        fmt.selectedIndex = i;
+        state.format = selected.format;
+        break;
+      }
+    }
+  }
+  updateProgrammeDisplay();
+  if(selected.name){
+    setTimeout(() => showToast('Programme pre-selected: ' + selected.name, 'success'), 400);
+  }
+  try{ sessionStorage.removeItem('lewisSelectedProgramme'); }catch(e){}
 })();
 
 /* =========================================================
