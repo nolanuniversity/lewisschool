@@ -1702,7 +1702,52 @@ buildFinderSubjects();
 buildSearchTags();
 updateFormatCounts();
 renderCatalogue();
+/* =========================================================
+   AUTO-SELECT PROGRAMME FROM HOMEPAGE
+   If the visitor clicked "Apply Now" on a specific programme card
+   on index.html, that programme was saved to sessionStorage.
+   Here we read it back and pre-select the discipline + format.
+   ========================================================= */
+(function restoreSelectedProgramme(){
+  let selected = null;
+  try{
+    selected = JSON.parse(sessionStorage.getItem('lewisSelectedProgramme') || 'null');
+  }catch(e){ selected = null; }
+  if(!selected) return;
 
+  // Pre-select discipline card
+  const cards = document.querySelectorAll('#disciplinesGrid .school-card');
+  cards.forEach(card => {
+    if(card.dataset.subject === selected.subject){
+      card.classList.add('selected');
+      state.subject = selected.subject;
+      $('#formatGroup').style.display = 'block';
+    }
+  });
+
+  // Pre-select format dropdown
+  const fmt = document.getElementById('formatSelect');
+  if(fmt && selected.format){
+    for(let i = 0; i < fmt.options.length; i++){
+      if(fmt.options[i].value === selected.format){
+        fmt.selectedIndex = i;
+        state.format = selected.format;
+        break;
+      }
+    }
+  }
+
+  // Update the "Your Selected Programme" display
+  updateProgrammeDisplay();
+
+  // Optional: show a small confirmation toast
+  if(selected.name){
+    setTimeout(() => showToast('Programme pre-selected: ' + selected.name, 'success'), 400);
+  }
+
+  // Clear it so that a fresh visit starts clean
+  try{ sessionStorage.removeItem('lewisSelectedProgramme'); }catch(e){}
+})();
 console.log(`Lewis School — Finance & Investment · ${SUBJECTS.length} disciplines · ${PROGRAMMES.length} programmes · 4 graduate formats`);
 </script>
 </body>
