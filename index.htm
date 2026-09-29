@@ -14,16 +14,16 @@
 :root{
   color-scheme: light only;
   /* ============ LEWIS SCHOOL PALETTE ============ */
-  --forest:#0B3D2E;       /* Deep Forest Green — primary */
+  --forest:#0B3D2E;
   --forest-light:#14523E;
   --forest-dark:#062A1F;
-  --gold:#C9A227;         /* Rich Gold — secondary */
+  --gold:#C9A227;
   --gold-light:#D9B94A;
   --gold-dark:#8B6F1A;
   --gold-10:rgba(201,162,39,0.1);
-  --ivory:#F7F4EC;        /* Ivory — background */
+  --ivory:#F7F4EC;
   --ivory-warm:#EFEADC;
-  --charcoal:#1E2421;     /* Charcoal — accent */
+  --charcoal:#1E2421;
   --white:#FFFFFF;
   --gray-light:#F0EDE4;
   --gray-mid:#D9D4C7;
@@ -74,9 +74,9 @@ input,select,textarea{color-scheme:light only}
 .main-header{background:var(--white);box-shadow:var(--shadow-sm);position:sticky;top:0;z-index:1000;transition:var(--transition);width:100%}
 .main-header.scrolled{box-shadow:var(--shadow-md)}
 .main-header .container{display:flex;justify-content:space-between;align-items:center;padding:14px 24px;gap:16px;min-width:0;max-width:100%}
-.logo{display:flex;flex-direction:column;flex-shrink:1;min-width:0;overflow:hidden}
-.logo-name{font-size:17px;font-weight:800;letter-spacing:1.5px;color:var(--forest);line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.logo-tag{font-size:9.5px;color:var(--gold-dark);font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.logo{display:flex;align-items:center;flex-shrink:1;min-width:0;overflow:hidden;text-decoration:none;transition:var(--transition);cursor:pointer}
+.logo img{height:52px;width:auto;max-width:100%;display:block;object-fit:contain;transition:var(--transition)}
+.logo:hover img{opacity:.92;transform:scale(1.02)}
 .main-nav ul{display:flex;gap:26px;align-items:center}
 .main-nav ul li a{font-size:14px;font-weight:500;color:var(--gray-darker);padding:8px 0;position:relative;white-space:nowrap}
 .main-nav ul li a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--gold);transition:var(--transition)}
@@ -96,7 +96,7 @@ input,select,textarea{color-scheme:light only}
 .mobile-nav ul li a:hover,.mobile-nav ul li button:hover{color:var(--gold-dark);background:var(--gray-light)}
 
 /* HERO */
-.hero{position:relative;background:linear-gradient(135deg,var(--forest-dark) 0%,var(--forest) 55%,var(--forest-light) 100%);color:#fff;padding:80px 0 70px;overflow:hidden;width:100%}
+.hero{position:relative;background:linear-gradient(135deg,var(--forest-dark) 0%,var(--forest) 55%,var(--forest-light) 100%);color:#fff;padding:80px 0 70px;overflow:hidden;width:100%;scroll-margin-top:100px}
 .hero::before{content:'';position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cdefs%3E%3Cpattern id='p' x='0' y='0' width='60' height='60' patternUnits='userSpaceOnUse'%3E%3Cpolyline points='10,50 30,20 50,50' fill='none' stroke='%23C9A227' stroke-width='0.8' opacity='0.18'/%3E%3Ccircle cx='10' cy='10' r='1' fill='%23C9A227' opacity='0.18'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100%25' height='100%25' fill='url(%23p)'/%3E%3C/svg%3E");opacity:.55;pointer-events:none}
 .hero .container{position:relative;z-index:2}
 .hero-grid{display:grid;grid-template-columns:1.05fr 0.95fr;gap:56px;align-items:center}
@@ -467,7 +467,7 @@ input,select,textarea{color-scheme:light only}
 @media(max-width:600px){
   .container{padding:0 16px}
   .main-header .container{padding:10px 16px;gap:8px;flex-wrap:nowrap}
-  .logo{flex-shrink:1;min-width:0}
+  .logo img{height:42px}
   .logo-name{font-size:14px;letter-spacing:1px}
   .logo-tag{font-size:8px;letter-spacing:1.2px}
   .header-actions{gap:6px}
@@ -512,6 +512,7 @@ input,select,textarea{color-scheme:light only}
 @media(max-width:400px){
   .container{padding:0 12px}
   .main-header .container{padding:9px 12px;gap:6px}
+  .logo img{height:36px}
   .logo-name{font-size:12px;letter-spacing:.5px}
   .logo-tag{font-size:7px;letter-spacing:.8px}
   .header-actions{gap:5px}
@@ -560,9 +561,8 @@ input,select,textarea{color-scheme:light only}
 
 <header class="main-header" id="mainHeader">
   <div class="container">
-    <a href="#" class="logo" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">
-      <span class="logo-name">LEWIS SCHOOL</span>
-      <span class="logo-tag">Finance &amp; Investment · Nolan University</span>
+    <a href="index.html" class="logo" id="homeLogo" aria-label="Lewis School — Home">
+      <img src="b8a97971-51bf-458b-95b1-b8d78773f16f.png" alt="Lewis School — Finance &amp; Investment · Nolan University">
     </a>
     <nav class="main-nav">
       <ul>
@@ -595,7 +595,7 @@ input,select,textarea{color-scheme:light only}
 </div>
 
 <!-- HERO -->
-<section class="hero">
+<section class="hero" id="hero">
   <div class="container">
     <div class="hero-grid">
       <div class="hero-inner">
@@ -1080,7 +1080,7 @@ input,select,textarea{color-scheme:light only}
    CONFIG
    ========================================================= */
 const APPLY_URL = 'admissions-apply.html';
-const USD_RATE = 20; // ZMW per 1 USD
+const USD_RATE = 20;
 
 function toUSD(zmw){
   const raw = zmw / USD_RATE;
@@ -1092,7 +1092,7 @@ function fmtZMW(n){ return 'K' + n.toLocaleString(); }
 function fmtUSD(zmw){ return 'US$' + toUSD(zmw).toLocaleString(); }
 
 /* =========================================================
-   HERO SLIDES (12 images → 4 formats, 3 each)
+   HERO SLIDES
    ========================================================= */
 const HERO_SLIDES = [
   { src: '85fd7197-bc0f-41ec-b22a-930c3b3f7294.png', format: 'Professional Certificate', badge: 'Professional Certificates', sub: '12–16 Weeks · From K18,500 (≈ US$925)' },
@@ -1144,7 +1144,7 @@ function showToast(msg, type){
 }
 
 /* =========================================================
-   SUBJECTS — 10 core areas of Lewis School
+   SUBJECTS
    ========================================================= */
 const SUBJECTS = [
   {name:'Finance',                   icon:'fa-coins',              blurb:'Financial theory, analysis and decision-making at graduate level.'},
@@ -1172,10 +1172,9 @@ const WEEKS = {
   'Professional Certificate': 14,
   'Executive Programme':      22,
   'Postgraduate Diploma':     28,
-  'Masters Programme':        66  // ~15 months
+  'Masters Programme':        66
 };
 
-/* Programme definitions: subject → per-format name, description, learning, audience */
 const CATALOGUE = {
   'Finance': {
     'Professional Certificate':'Professional Certificate in Finance',
@@ -1269,7 +1268,6 @@ const CATALOGUE = {
   }
 };
 
-/* Build PROGRAMMES flat list */
 const PROGRAMMES = [];
 Object.entries(CATALOGUE).forEach(([subject, data])=>{
   Object.entries(PRICES).forEach(([format, price])=>{
@@ -1296,9 +1294,6 @@ Object.entries(CATALOGUE).forEach(([subject, data])=>{
   });
 });
 
-/* =========================================================
-   PAYMENT PLANS
-   ========================================================= */
 function paymentPlan(p){
   if(p.format === 'Professional Certificate'){
     const first = 4500;
@@ -1355,9 +1350,6 @@ function paymentPlan(p){
   return null;
 }
 
-/* =========================================================
-   STATE
-   ========================================================= */
 const state = { subject:null, format:null, currentProgrammeId:null };
 
 /* =========================================================
@@ -1512,7 +1504,7 @@ function closeProgramme(){ $('#programmeModal').classList.remove('show'); docume
    SEARCH
    ========================================================= */
 const searchModal=$('#searchModal'), searchInput=$('#searchInput'), searchResults=$('#searchResults'), searchHint=$('#searchHint');
-function buildSearchTags(){ const tags = ['Investment','Capital','Risk','Corporate Finance','Private Equity','Banking','Wealth','Master\'s','Executive','Financial Economics']; $('#searchTags').innerHTML = tags.map(t=>`<button type="button" class="search-tag" data-tag="${esc(t)}">${esc(t)}</button>`).join(''); $$('#searchTags .search-tag').forEach(b=>b.addEventListener('click',()=>{ searchInput.value = b.dataset.tag; renderSearchResults(b.dataset.tag); searchInput.focus(); })); }
+function buildSearchTags(){ const tags = ['Investment','Capital','Risk','Corporate Finance','Private Equity','Banking','Wealth',"Master's",'Executive','Financial Economics']; $('#searchTags').innerHTML = tags.map(t=>`<button type="button" class="search-tag" data-tag="${esc(t)}">${esc(t)}</button>`).join(''); $$('#searchTags .search-tag').forEach(b=>b.addEventListener('click',()=>{ searchInput.value = b.dataset.tag; renderSearchResults(b.dataset.tag); searchInput.focus(); })); }
 function openSearch(){ searchModal.classList.add('show'); document.body.style.overflow='hidden'; setTimeout(()=>searchInput.focus(),80); renderSearchResults(searchInput.value); }
 function closeSearch(){ searchModal.classList.remove('show'); document.body.style.overflow=''; searchInput.value=''; }
 function renderSearchResults(q){
@@ -1553,6 +1545,39 @@ $('#finderReset').addEventListener('click',()=>{ finderSubject.value=''; finderF
 function toggleMobileMenu(force){ const nav = document.getElementById('mobileNav'), btn = document.getElementById('mobileMenuBtn'); if(!nav || !btn) return; const willShow = (typeof force === 'boolean') ? force : !nav.classList.contains('show'); nav.classList.toggle('show', willShow); btn.setAttribute('aria-expanded', willShow ? 'true' : 'false'); }
 document.addEventListener('click', function(e){ const btn = e.target.closest('#mobileMenuBtn, .mobile-menu-btn'); if(btn){ e.preventDefault(); e.stopPropagation(); toggleMobileMenu(); } }, true);
 document.addEventListener('click', function(e){ const link = e.target.closest('#mobileNav a, #mobileNav button'); if(link){ const nav = document.getElementById('mobileNav'); if(nav) nav.classList.remove('show'); const btn = document.getElementById('mobileMenuBtn'); if(btn) btn.setAttribute('aria-expanded','false'); } });
+
+/* =========================================================
+   LOGO CLICK → always land on homepage hero
+   ========================================================= */
+(function setupHomeLogo(){
+  const logo = document.getElementById('homeLogo');
+  if(!logo) return;
+  logo.addEventListener('click', function(e){
+    const path = (window.location.pathname.split('/').pop() || '').toLowerCase();
+    const isHomepage = path === '' || path === 'index.html' || path === 'home.html';
+
+    if(isHomepage){
+      e.preventDefault();
+      // Close mobile menu if open
+      const nav = document.getElementById('mobileNav');
+      if(nav) nav.classList.remove('show');
+      const btn = document.getElementById('mobileMenuBtn');
+      if(btn) btn.setAttribute('aria-expanded','false');
+      // Smooth-scroll to hero section
+      const hero = document.getElementById('hero');
+      if(hero){
+        hero.scrollIntoView({ behavior:'smooth', block:'start' });
+      } else {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+      // Clean URL of any #anchor without jumping
+      if(window.history && window.history.replaceState){
+        window.history.replaceState(null, '', window.location.pathname);
+      }
+    }
+    // Otherwise, allow href="index.html" to navigate normally
+  });
+})();
 
 /* =========================================================
    STUDENT PORTAL
