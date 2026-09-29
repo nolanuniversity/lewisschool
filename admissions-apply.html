@@ -216,7 +216,7 @@ input,select,textarea{color-scheme:light only}
       <span><i class="fas fa-university"></i> A school of Nolan University</span>
     </div>
     <div class="top-bar-right">
-      <a href="./index.html" onclick="return goHome(event);"><i class="fas fa-arrow-left"></i> Back to Lewis School</a>
+      <a href="https://lewisschool.nolanuniversity.org/" class="go-home" data-go-home><i class="fas fa-arrow-left"></i> Back to Lewis School</a>
     </div>
   </div>
 </div>
@@ -224,11 +224,11 @@ input,select,textarea{color-scheme:light only}
 <!-- HEADER -->
 <header class="main-header" id="mainHeader">
   <div class="container">
-    <a href="./index.html" class="logo" id="homeLogo" aria-label="Lewis School — Home" onclick="return goHome(event);">
+    <a href="https://lewisschool.nolanuniversity.org/" class="logo go-home" id="homeLogo" aria-label="Lewis School — Home" data-go-home>
       <img src="b8a97971-51bf-458b-95b1-b8d78773f16f.png" alt="Lewis School — Finance &amp; Investment · Nolan University">
     </a>
     <div class="header-right">
-      <a href="./index.html" onclick="return goHome(event);"><i class="fas fa-home"></i> <span class="hide-mobile">Back to Homepage</span></a>
+      <a href="https://lewisschool.nolanuniversity.org/" class="go-home" data-go-home><i class="fas fa-home"></i> <span class="hide-mobile">Back to Homepage</span></a>
     </div>
   </div>
 </header>
@@ -599,55 +599,23 @@ input,select,textarea{color-scheme:light only}
 
 <script>
 /* =========================================================
-   HOME NAVIGATION — Robust
-   Called by the logo, "Back to Lewis School" and "Back to Homepage".
-   Tries multiple paths so it works on GitHub Pages, custom domains,
-   subfolders, and local file:// viewing.
+   HOME URL — Lewis School homepage (absolute)
    ========================================================= */
-function goHome(e){
-  if(e && e.preventDefault) e.preventDefault();
+const HOME_URL = 'https://lewisschool.nolanuniversity.org/';
 
-  // Build a list of candidate URLs, ordered by likelihood
-  const candidates = [
-    './index.html',     // same folder, explicit
-    'index.html',       // same folder, relative
-    './',               // current directory (serves index.html by default)
-    '/',                // domain root (in case homepage is at root)
-  ];
-
-  // Try the first candidate immediately. If the browser can't reach it,
-  // the user can still use browser back. This is fast and simple.
-  // We pick based on current page:
-  const path = window.location.pathname;
-
-  // If we're already on the homepage (index.html or root), just scroll to hero
-  const onHomepage =
-    path === '/' ||
-    path === '' ||
-    path.endsWith('/index.html') ||
-    path.endsWith('/') ||
-    path === '/index.html';
-
-  if(onHomepage){
-    const hero = document.getElementById('hero');
-    if(hero) hero.scrollIntoView({ behavior:'smooth', block:'start' });
-    else window.scrollTo({ top: 0, behavior: 'smooth' });
+/* =========================================================
+   ATTACH HOME-REDIRECT HANDLERS
+   Every element with data-go-home sends the visitor to the homepage.
+   This overrides the href so it works even if the relative path fails.
+   ========================================================= */
+document.addEventListener('click', function(e){
+  const trigger = e.target.closest('[data-go-home]');
+  if(trigger){
+    e.preventDefault();
+    window.location.href = HOME_URL;
     return false;
   }
-
-  // Otherwise, navigate to the homepage.
-  // Use location.assign so the browser adds a proper history entry.
-  try{
-    window.location.assign('./index.html');
-  } catch(err){
-    try{
-      window.location.href = 'index.html';
-    } catch(err2){
-      window.location.href = './';
-    }
-  }
-  return false;
-}
+}, true);
 
 /* =========================================================
    CONFIG
@@ -1030,7 +998,7 @@ $('#applicationForm').addEventListener('submit', e => {
   setTimeout(() => {
     showToast('Application submitted successfully! Check your email for confirmation.', 'success');
     setTimeout(() => {
-      window.location.href = './index.html';
+      window.location.href = HOME_URL;
     }, 2200);
   }, 1600);
 });
