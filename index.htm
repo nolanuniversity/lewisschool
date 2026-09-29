@@ -1040,21 +1040,39 @@ function fmtZMW(n){ return 'K' + n.toLocaleString(); }
 function fmtUSD(zmw){ return 'US$' + toUSD(zmw).toLocaleString(); }
 
 /* =========================================================
-   HERO SLIDES
+   HERO SLIDES — 5 slides using the new Lewis School images
    ========================================================= */
 const HERO_SLIDES = [
-  { src: '85fd7197-bc0f-41ec-b22a-930c3b3f7294.png', format: 'Professional Certificate', badge: 'Professional Certificates', sub: '12–16 Weeks · From K18,500 (≈ US$925)' },
-  { src: '7de14444-a94c-4c84-8841-c59b21f9163f.png', format: 'Professional Certificate', badge: 'Professional Certificates', sub: '12–16 Weeks · From K18,500 (≈ US$925)' },
-  { src: '6e6ce8d3-0632-41cf-885b-70af0e9cb711.png', format: 'Professional Certificate', badge: 'Professional Certificates', sub: '12–16 Weeks · From K18,500 (≈ US$925)' },
-  { src: '6915e9bd-3d97-4cf4-bc79-4a935457c72d.png', format: 'Executive Programme',      badge: 'Executive Programmes',      sub: '20–24 Weeks · From K28,000 (≈ US$1,400)' },
-  { src: '5acffc06-1d4d-40d0-a252-1764cf1f041a.png', format: 'Executive Programme',      badge: 'Executive Programmes',      sub: '20–24 Weeks · From K28,000 (≈ US$1,400)' },
-  { src: '58c7bf5e-6e17-4a0a-a133-fa7286998c44.png', format: 'Executive Programme',      badge: 'Executive Programmes',      sub: '20–24 Weeks · From K28,000 (≈ US$1,400)' },
-  { src: '563e800c-af71-48b6-8c72-1917aea805c0.png', format: 'Postgraduate Diploma',     badge: 'Postgraduate Diplomas',     sub: '24–30 Weeks · From K38,000 (≈ US$1,900)' },
-  { src: '3025792b-67f1-4946-93ee-cf9a2faf8639.png', format: 'Postgraduate Diploma',     badge: 'Postgraduate Diplomas',     sub: '24–30 Weeks · From K38,000 (≈ US$1,900)' },
-  { src: '2bda3548-2e9a-4c5a-9d25-fdcc1ab8f11f.png', format: 'Postgraduate Diploma',     badge: 'Postgraduate Diplomas',     sub: '24–30 Weeks · From K38,000 (≈ US$1,900)' },
-  { src: '1ae9217d-9217-45ed-a4a8-bf53dbe66c2f.png', format: 'Masters Programme',        badge: "Master's Programmes",       sub: '12–18 Months · From K58,000 (≈ US$2,900)' },
-  { src: '0f5f319b-8ba2-4398-b776-8707752875e4.png', format: 'Masters Programme',        badge: "Master's Programmes",       sub: '12–18 Months · From K58,000 (≈ US$2,900)' },
-  { src: '075d5e9a-6b4e-4618-af99-b2a4ef0d7165.png', format: 'Masters Programme',        badge: "Master's Programmes",       sub: '12–18 Months · From K58,000 (≈ US$2,900)' }
+  {
+    src: 'ffb6ed85-27d2-4311-b94f-384cd311e541.png',
+    format: 'Professional Certificate',
+    badge: 'Professional Certificates',
+    sub: '12–16 Weeks · From K18,500 (≈ US$925)'
+  },
+  {
+    src: '832f2716-4d3e-4437-a834-39065a42a7a5.png',
+    format: 'Executive Programme',
+    badge: 'Executive Programmes',
+    sub: '20–24 Weeks · From K28,000 (≈ US$1,400)'
+  },
+  {
+    src: '72bbf6d8-c515-4bcc-9ffa-fa31c8700ec7.png',
+    format: 'Postgraduate Diploma',
+    badge: 'Postgraduate Diplomas',
+    sub: '24–30 Weeks · From K38,000 (≈ US$1,900)'
+  },
+  {
+    src: 'b31e4e1a-03e6-4e29-a2bf-5b96ed29cf0a (2).png',
+    format: 'Masters Programme',
+    badge: "Master's Programmes",
+    sub: '12–18 Months · From K58,000 (≈ US$2,900)'
+  },
+  {
+    src: 'b31e4e1a-03e6-4e29-a2bf-5b96ed29cf0a (1).png',
+    format: 'Professional Certificate',
+    badge: 'Professional Certificates',
+    sub: '12–16 Weeks · From K18,500 (≈ US$925)'
+  }
 ];
 const HERO_ROTATE_MS = 5500;
 
